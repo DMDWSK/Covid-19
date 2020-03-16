@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+
+<body>
+    <nav>
+        <div class="nav-wrapper">
+            <a class="brand-logo"><i class="material-icons">fingerprint</i>Covid-19</a>
+            <ul class="right hide-on-med-and-down">
+                <li><a href="/statistics"><i class="material-icons">assignment</i></a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container" th:switch="${patients}">
+        <div class="table-wrapper">
+            <h2 th:case="null">No Patients.</h2>
+            <div th:case="*" class="table-title">
+                <div class="row">
+                    <div class="col-sm-8"><h2>Patients' <b>Details</b></h2></div>
+                </div>
+            </div>
+            <div>
+                <a class="add" title="Add" data-toggle="tooltip" href="/new"><i class="material-icons"></i></a>
+            </div>
+            <table class="table table-bordered">
+                <thead>
+                </tr>
+                <tr>
+                    <th>Name</th>
+                    <th>Surname</th>
+                    <th>Health Status</th>
+                    <th>Date of Birth</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="patient : ${patients}">
+                    <td th:text="${patient.name}"></td>
+                    <td th:text="${patient.surname}"></td>
+                    <td th:text="${patient.status}"></td>
+                    <td th:text="${patient.birth}"></td>
+                    <td>
+                        <a class="edit" title="Edit" data-toggle="tooltip" th:href="@{/edit/{id}(id=${patient.id})}"><i
+                                class="material-icons"></i></a>
+                        <a class="delete" title="Delete" data-toggle="tooltip"
+                           th:href="@{/delete/{id}(id=${patient.id})}"><i class="material-icons"></i></a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
